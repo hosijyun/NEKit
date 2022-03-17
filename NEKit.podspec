@@ -31,6 +31,10 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '9.0'
 
   s.source_files = 'NEKit/Classes/**/*'
+  s.dependency 'CocoaLumberjack/Swift'
+  s.dependency 'Yaml'
+  s.dependency 'CocoaAsyncSocket'
+  s.dependency 'MMDB-Swift'
   
   # s.resource_bundles = {
   #   'NEKit' => ['NEKit/Assets/*.png']
