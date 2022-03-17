@@ -1,5 +1,5 @@
 import Foundation
-import CocoaLumberjackSwift
+import CocoaLumberjack
 
 /**
  The pool is build to hold fake ips.

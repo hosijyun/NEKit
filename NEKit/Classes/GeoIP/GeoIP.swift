@@ -1,5 +1,5 @@
 import Foundation
-import MMDB
+import MMDB_Swift
 
 open class GeoIP {
     // Back in the days, MMDB ships a bundled GeoLite2 database. However, that has changed

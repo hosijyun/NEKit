@@ -1,5 +1,5 @@
 import Foundation
-import CocoaLumberjackSwift
+import CocoaLumberjack
 
 public class Router {
     var IPv4NATRoutes: [Port: (IPv4Address, Port)] = [:]

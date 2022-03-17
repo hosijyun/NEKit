@@ -1,6 +1,6 @@
 import Foundation
 import NetworkExtension
-import CocoaLumberjackSwift
+import CocoaLumberjack
 
 /// The delegate protocol of `NWUDPSocket`.
 public protocol NWUDPSocketDelegate: class {

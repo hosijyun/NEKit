@@ -1,6 +1,6 @@
 import Foundation
 import NetworkExtension
-import CocoaLumberjackSwift
+import CocoaLumberjack
 
 /// A DNS server designed as an `IPStackProtocol` implementation which works with TUN interface.
 ///

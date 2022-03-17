@@ -4,7 +4,7 @@ import tun2socks
 /// The TCP socket build upon `TSTCPSocket`.
 ///
 /// - warning: This class is not thread-safe.
-public class TUNTCPSocket: RawTCPSocketProtocol, TSTCPSocketDelegate {
+public class TUNTCPSocket: NSObject, RawTCPSocketProtocol, TSTCPSocketDelegate {
     fileprivate let tsSocket: TSTCPSocket
     fileprivate var reading = false
     fileprivate var pendingReadData: Data = Data()
@@ -22,6 +22,7 @@ public class TUNTCPSocket: RawTCPSocketProtocol, TSTCPSocketDelegate {
      */
     public init(socket: TSTCPSocket) {
         tsSocket = socket
+        super.init()
         tsSocket.delegate = self
     }
 
@@ -63,7 +64,8 @@ public class TUNTCPSocket: RawTCPSocketProtocol, TSTCPSocketDelegate {
     ///   - enableTLS: enableTLS
     ///   - tlsSettings: tlsSettings
     /// - Throws: Never throws anything.
-    public func connectTo(host: String, port: Int, enableTLS: Bool, tlsSettings: [AnyHashable: Any]?) throws {}
+    public func connectTo(host: String, port: Int, enableTLS: Bool, tlsSettings: [AnyHashable: Any]?) throws {
+    }
 
     /**
      Disconnect the socket.
@@ -98,7 +100,7 @@ public class TUNTCPSocket: RawTCPSocketProtocol, TSTCPSocketDelegate {
      */
     public func write(data: Data) {
         remainWriteLength = data.count
-        tsSocket.writeData(data)
+        tsSocket.write(data)
     }
 
     /**
@@ -220,7 +222,7 @@ public class TUNTCPSocket: RawTCPSocketProtocol, TSTCPSocketDelegate {
         }
     }
 
-    open func didReadData(_ data: Data, from: TSTCPSocket) {
+    open func didRead(_ data: Data, from: TSTCPSocket) {
         queueCall {
             self.pendingReadData.append(data)
             self.checkReadData()

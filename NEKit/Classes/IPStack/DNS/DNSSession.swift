@@ -1,5 +1,5 @@
 import Foundation
-import CocoaLumberjackSwift
+import CocoaLumberjack
 
 open class DNSSession {
     public let requestMessage: DNSMessage

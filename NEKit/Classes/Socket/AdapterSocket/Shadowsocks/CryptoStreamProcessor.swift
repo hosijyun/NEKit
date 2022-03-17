@@ -102,7 +102,7 @@ extension ShadowsocksAdapter {
                 case .encrypt:
                     return CCCrypto(operation: .encrypt, mode: .cfb, algorithm: .aes, initialVector: writeIV, key: key)
                 }
-            case .CHACHA20:
+            /*case .CHACHA20:
                 switch operation {
                 case .decrypt:
                     return SodiumStreamCrypto(key: key, iv: readIV, algorithm: .chacha20)
@@ -115,7 +115,7 @@ extension ShadowsocksAdapter {
                     return SodiumStreamCrypto(key: key, iv: readIV, algorithm: .salsa20)
                 case .encrypt:
                     return SodiumStreamCrypto(key: key, iv: writeIV, algorithm: .salsa20)
-                }
+                }*/
             case .RC4MD5:
                 var combinedKey = Data(capacity: key.count + ivLength)
                 combinedKey.append(key)

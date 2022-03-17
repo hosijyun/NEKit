@@ -5,8 +5,8 @@ public struct CryptoHelper {
         .AES128CFB: (16, 16),
         .AES192CFB: (24, 16),
         .AES256CFB: (32, 16),
-        .CHACHA20: (32, 8),
-        .SALSA20: (32, 8),
+        //.CHACHA20: (32, 8),
+        //.SALSA20: (32, 8),
         .RC4MD5: (16, 16)
         ]
 

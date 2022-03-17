@@ -1,9 +1,9 @@
 import Foundation
+import CocoaLumberjack
 import tun2socks
-import CocoaLumberjackSwift
 
 /// This class wraps around tun2socks to build a TCP only IP stack.
-open class TCPStack: TSIPStackDelegate, IPStackProtocol {
+open class TCPStack: NSObject, TSIPStackDelegate, IPStackProtocol {
     /// The `TCPStack` singleton instance.
     public static var stack: TCPStack {
         TSIPStack.stack.delegate = _stack
@@ -11,12 +11,12 @@ open class TCPStack: TSIPStackDelegate, IPStackProtocol {
         return _stack
     }
     fileprivate static let _stack: TCPStack = TCPStack()
-    
+
     /// The proxy server that handles connections accepted from this stack.
     ///
     /// - warning: This must be set before `TCPStack` is registered to `TUNInterface`.
     open weak var proxyServer: ProxyServer?
-    
+
     /// This is set automatically when the stack is registered to some interface.
     open var outputFunc: (([Data], [NSNumber]) -> Void)! {
         get {
@@ -26,13 +26,14 @@ open class TCPStack: TSIPStackDelegate, IPStackProtocol {
             TSIPStack.stack.outputBlock = newValue
         }
     }
-    
+
     /**
      Inistailize a new TCP stack.
      */
-    fileprivate init() {
+    override init() {
+        super.init()
     }
-    
+
     /**
      Input a packet into the stack.
      
@@ -51,16 +52,16 @@ open class TCPStack: TSIPStackDelegate, IPStackProtocol {
             }
         }
         if IPPacket.peekProtocol(packet) == .tcp {
-            TSIPStack.stack.received(packet: packet)
+            TSIPStack.stack.received(packet)
             return true
         }
         return false
     }
-    
+
     public func start() {
         TSIPStack.stack.resumeTimer()
     }
-    
+
     /**
      Stop the TCP stack.
      
@@ -71,9 +72,9 @@ open class TCPStack: TSIPStackDelegate, IPStackProtocol {
         TSIPStack.stack.suspendTimer()
         proxyServer = nil
     }
-    
+
     // MARK: TSIPStackDelegate Implementation
-    open func didAcceptTCPSocket(_ sock: TSTCPSocket) {
+    open func didAccept(_ sock: TSTCPSocket) {
         DDLogDebug("Accepted a new socket from IP stack.")
         let tunSocket = TUNTCPSocket(socket: sock)
         let proxySocket = DirectProxySocket(socket: tunSocket)

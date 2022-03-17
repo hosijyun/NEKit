@@ -1,5 +1,5 @@
 import Foundation
-import CocoaLumberjackSwift
+import CocoaLumberjack
 
 open class DNSMessage {
     //    var sourceAddress: IPv4Address?

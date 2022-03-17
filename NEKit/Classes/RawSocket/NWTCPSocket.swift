@@ -1,6 +1,6 @@
 import Foundation
 import NetworkExtension
-import CocoaLumberjackSwift
+import CocoaLumberjack
 
 /// The TCP socket build upon `NWTCPConnection`.
 ///

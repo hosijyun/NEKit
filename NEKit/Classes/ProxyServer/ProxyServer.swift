@@ -1,6 +1,5 @@
 import Foundation
 import CocoaAsyncSocket
-import Resolver
 
 /**
  The base proxy server class.
