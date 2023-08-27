@@ -1,5 +1,0 @@
-module tun2socks {
-    requires objc
-    header "tun2socks.h"
-    export *
-}

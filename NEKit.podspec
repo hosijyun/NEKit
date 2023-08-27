@@ -30,16 +30,17 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '9.0'
 
-  s.source_files = 'NEKit/Classes/**/*'
+  s.source_files = 'NEKit/Classes/**/*.swift', 'NEKit/Classes/lwip/**/*.c'
   s.exclude_files = 'NEKit/Classes/IPStack/Packet/IPMutablePacket.swift', 'NEKit/Classes/IPStack/Packet/TCPMutablePacket.swift', 'NEKit/Classes/Crypto/SodiumStreamCrypto.swift', 'NEKit/Classes/IPStack/Router.swift'
   s.dependency 'CocoaLumberjack/Swift'
   s.dependency 'Yaml'
   s.dependency 'CocoaAsyncSocket'
   s.dependency 'MMDB-Swift'
   s.xcconfig = {
-    'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/NEKit/Classes/tun2socks'
+    'SWIFT_INCLUDE_PATHS' => '$(PODS_TARGET_SRCROOT)/NEKit/Classes/lwip/include/',
+    'HEADER_SEARCH_PATHS' => '$(PODS_TARGET_SRCROOT)/NEKit/Classes/lwip/include/'
   }
-  
+
   # s.resource_bundles = {
   #   'NEKit' => ['NEKit/Assets/*.png']
   # }

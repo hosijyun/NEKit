@@ -1,9 +1,8 @@
 import Foundation
 import CocoaLumberjack
-import tun2socks
 
 /// This class wraps around tun2socks to build a TCP only IP stack.
-open class TCPStack: NSObject, TSIPStackDelegate, IPStackProtocol {
+open class TCPStack: TSIPStackDelegate, IPStackProtocol {
     /// The `TCPStack` singleton instance.
     public static var stack: TCPStack {
         TSIPStack.stack.delegate = _stack
@@ -30,18 +29,17 @@ open class TCPStack: NSObject, TSIPStackDelegate, IPStackProtocol {
     /**
      Inistailize a new TCP stack.
      */
-    override init() {
-        super.init()
+    fileprivate init() {
     }
 
     /**
      Input a packet into the stack.
-     
+
      - note: Only process IPv4 TCP packet as of now, since stable lwip does not support ipv6 yet.
-     
+
      - parameter packet:  The IP packet.
      - parameter version: The version of the IP packet, i.e., AF_INET, AF_INET6.
-     
+
      - returns: If the stack takes in this packet. If the packet is taken in, then it won't be processed by other IP stacks.
      */
     open func input(packet: Data, version: NSNumber?) -> Bool {
@@ -52,7 +50,7 @@ open class TCPStack: NSObject, TSIPStackDelegate, IPStackProtocol {
             }
         }
         if IPPacket.peekProtocol(packet) == .tcp {
-            TSIPStack.stack.received(packet)
+            TSIPStack.stack.received(packet: packet)
             return true
         }
         return false
@@ -64,7 +62,7 @@ open class TCPStack: NSObject, TSIPStackDelegate, IPStackProtocol {
 
     /**
      Stop the TCP stack.
-     
+
      After calling this, this stack should never be referenced. Use `TCPStack.stack` to get a new reference of the singleton.
      */
     open func stop() {
@@ -74,7 +72,7 @@ open class TCPStack: NSObject, TSIPStackDelegate, IPStackProtocol {
     }
 
     // MARK: TSIPStackDelegate Implementation
-    open func didAccept(_ sock: TSTCPSocket) {
+    open func didAcceptTCPSocket(_ sock: TSTCPSocket) {
         DDLogDebug("Accepted a new socket from IP stack.")
         let tunSocket = TUNTCPSocket(socket: sock)
         let proxySocket = DirectProxySocket(socket: tunSocket)
