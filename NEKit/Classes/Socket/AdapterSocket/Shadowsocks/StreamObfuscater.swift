@@ -2,15 +2,15 @@ import Foundation
 
 extension ShadowsocksAdapter {
     public struct StreamObfuscater {
-        public class Factory {
+        open class Factory {
             public init() {}
 
-            public func build(for session: ConnectSession) -> StreamObfuscaterBase {
+            open func build(for session: ConnectSession) -> StreamObfuscaterBase {
                 return StreamObfuscaterBase(for: session)
             }
         }
 
-        public class StreamObfuscaterBase {
+        open class StreamObfuscaterBase {
             public weak var inputStreamProcessor: ShadowsocksAdapter!
             private weak var _outputStreamProcessor: CryptoStreamProcessor!
             public var outputStreamProcessor: CryptoStreamProcessor! {
@@ -27,14 +27,14 @@ extension ShadowsocksAdapter {
             public var key: Data?
             public var writeIV: Data?
 
-            let session: ConnectSession
+            public let session: ConnectSession
 
-            init(for session: ConnectSession) {
+            public init(for session: ConnectSession) {
                 self.session = session
             }
 
-            func output(data: Data) {}
-            func input(data: Data) throws {}
+            open func output(data: Data) {}
+            open func input(data: Data) throws {}
         }
 
         public class OriginStreamObfuscater: StreamObfuscaterBase {
