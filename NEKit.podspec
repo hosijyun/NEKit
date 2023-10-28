@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = 'NEKit'
   s.module_name      = 'NEKit'
-  s.version          = '0.16.0'
+  s.version          = '0.16.1'
   s.summary          = 'A short description of NEKit.'
   s.homepage         = 'https://github.com/hesiyuan/NEKit'
   s.author           = 'hosijyun'
@@ -12,6 +12,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'NEKit/Classes/**/*.swift', 'NEKit/Classes/lwip/**/*.c'
   s.exclude_files = 'NEKit/Classes/IPStack/Packet/IPMutablePacket.swift', 'NEKit/Classes/IPStack/Packet/TCPMutablePacket.swift', 'NEKit/Classes/Crypto/SodiumStreamCrypto.swift', 'NEKit/Classes/IPStack/Router.swift'
+  s.preserve_paths = 'NEKit/Classes/lwip/**/*'
   s.dependency 'CocoaLumberjack/Swift'
   s.dependency 'CocoaAsyncSocket'
   s.xcconfig = {
