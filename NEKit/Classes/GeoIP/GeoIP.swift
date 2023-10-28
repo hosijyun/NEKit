@@ -1,4 +1,5 @@
 import Foundation
+#if canImport(MMDB_Swift)
 import MMDB_Swift
 
 open class GeoIP {
@@ -14,3 +15,4 @@ open class GeoIP {
         return GeoIP.database.lookup(ipAddress)
     }
 }
+#endif

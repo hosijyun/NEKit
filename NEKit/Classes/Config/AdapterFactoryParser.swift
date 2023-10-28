@@ -1,4 +1,5 @@
 import Foundation
+#if canImport(Yaml)
 import Yaml
 
 struct AdapterFactoryParser {
@@ -181,3 +182,4 @@ struct AdapterFactoryParser {
         return RejectAdapterFactory(delay: delay)
     }
 }
+#endif

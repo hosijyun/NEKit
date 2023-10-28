@@ -1,4 +1,5 @@
 import Foundation
+#if canImport(Yaml)
 import Yaml
 
 struct RuleParser {
@@ -139,3 +140,4 @@ struct RuleParser {
         return DNSFailRule(adapterFactory: adapter)
     }
 }
+#endif

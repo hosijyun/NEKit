@@ -82,10 +82,14 @@ public struct Utils {
 
         static func Lookup(_ ipAddress: String) -> String? {
             if Utils.IP.isIP(ipAddress) {
+                #if canImport(MMDB_Swift)
                 guard let result = GeoIP.LookUp(ipAddress) else {
                     return "--"
                 }
                 return result.isoCode
+                #else
+                return "--"
+                #endif
             } else {
                 return nil
             }

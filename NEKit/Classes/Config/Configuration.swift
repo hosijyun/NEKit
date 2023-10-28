@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(Yaml)
 import Yaml
+#endif
 
 public enum ConfigurationParserError: Error {
     case invalidYamlFile, noRuleDefined, ruleTypeMissing, unknownRuleType, ruleParsingError(errorInfo: String), noAdapterDefined, adapterIDMissing, adapterTypeMissing, adapterTypeUnknown, adapterParsingError(errorInfo: String)
@@ -15,6 +17,7 @@ open class Configuration {
 
     public init() {}
 
+#if canImport(Yaml)
     open func load(fromConfigString configString: String) throws {
         let config = try Yaml.load(configString)
         loadConfig(config)
@@ -32,11 +35,14 @@ open class Configuration {
             proxyPort = port
         }
     }
+#endif
 
 }
 
+#if canImport(Yaml)
 extension Yaml {
     var stringOrIntString: Swift.String? {
         return string ?? int?.description
     }
 }
+#endif
