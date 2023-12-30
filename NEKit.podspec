@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.source           = { :git => 'git@github.com:hosijyun/NEKit.git', :tag => s.version.to_s }
   s.swift_versions   = '5.0'
-  s.ios.deployment_target = '11.0'
+  s.ios.deployment_target = '12.0'
 
   s.source_files = 'NEKit/Classes/**/*.swift', 'NEKit/Classes/lwip/**/*.c'
   s.exclude_files = 'NEKit/Classes/IPStack/Packet/IPMutablePacket.swift', 'NEKit/Classes/IPStack/Packet/TCPMutablePacket.swift', 'NEKit/Classes/Crypto/SodiumStreamCrypto.swift', 'NEKit/Classes/IPStack/Router.swift'

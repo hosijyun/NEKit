@@ -1,77 +1,38 @@
 import Foundation
+import Network
 
-/// Represents the port number of IP protocol.
-public struct Port: CustomStringConvertible, ExpressibleByIntegerLiteral {
-    public typealias IntegerLiteralType = UInt16
+public typealias Port = Network.NWEndpoint.Port
 
-    fileprivate var inport: UInt16
+extension Port {
+    public var value: UInt16 {
+        return self.rawValue
+    }
+    public var valueInNetworkOrder: UInt16 {
+        return NSSwapHostShortToBig(self.rawValue)
+    }
 
-    /**
-     Initialize a new instance with the port number in network byte order.
-
-     - parameter portInNetworkOrder: The port number in network byte order.
-
-     - returns: The initailized port.
-     */
     public init(portInNetworkOrder: UInt16) {
-        self.inport = portInNetworkOrder
+        self.init(integerLiteral: NSSwapBigShortToHost(portInNetworkOrder))
     }
 
-    /**
-     Initialize a new instance with the port number.
-
-     - parameter port: The port number.
-
-     - returns: The initailized port.
-     */
     public init(port: UInt16) {
-        self.init(portInNetworkOrder: NSSwapHostShortToBig(port))
+        self.init(integerLiteral: port)
     }
 
-    public init(integerLiteral value: Port.IntegerLiteralType) {
-        self.init(port: value)
-    }
-
-    /**
-     Initialize a new instance with data in network byte order.
-
-     - parameter bytesInNetworkOrder: The port data in network byte order.
-
-     - returns: The initailized port.
-     */
     public init(bytesInNetworkOrder: UnsafeRawPointer) {
         self.init(portInNetworkOrder: bytesInNetworkOrder.load(as: UInt16.self))
     }
 
-    public var description: String {
-        return "<Port \(value)>"
-    }
-
-    /// The port number.
-    public var value: UInt16 {
-        return NSSwapBigShortToHost(inport)
-    }
-
-    public var valueInNetworkOrder: UInt16 {
-        return inport
-    }
-
-    /**
-     Run a block with the bytes of port in **network order**.
-
-     - parameter block: The block to run.
-
-     - returns: The value the block returns.
-     */
-    public mutating func withUnsafeBufferPointer<T>(_ block: (UnsafeRawBufferPointer) -> T) -> T {
-        return withUnsafeBytes(of: &inport) {
+    public func withUnsafeBufferPointer<T>(_ block: (UnsafeRawBufferPointer) -> T) -> T {
+        var port = NSSwapHostShortToBig(self.rawValue)
+        return withUnsafeBytes(of: &port) {
             return block($0)
         }
     }
 }
 
-public func == (left: Port, right: Port) -> Bool {
-    return left.valueInNetworkOrder == right.valueInNetworkOrder
+extension Port: CustomStringConvertible {
+    public var description: String {
+        return "<Port \(self.rawValue)>"
+    }
 }
-
-extension Port: Hashable {}

@@ -1,5 +1,6 @@
 import Foundation
 import lwip
+import CocoaLumberjack
 
 /// The delegate that the developer should implement to handle what to do when a new TCP socket is connected.
 public protocol TSIPStackDelegate : AnyObject {
@@ -109,6 +110,7 @@ public final class TSIPStack {
      - parameter packet: the data containing the whole IP packet.
      */
     public func received(packet: Data) {
+        DDLogInfo("Packet: \(packet.base64EncodedString())")
         // Due to the limitation of swift, if we want a zero-copy implemention, we have to change the definition of `pbuf.payload` to `const`, which is not possible.
         // So we have to copy the data anyway.
         let buf = pbuf_alloc(PBUF_RAW, UInt16(packet.count), PBUF_RAM)!
